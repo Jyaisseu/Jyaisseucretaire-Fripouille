@@ -1,4 +1,3 @@
-const Discord = require("discord.js@11.4.2");
 const Discord = require("discord.js@11.5.1");
 const mongoose = require("mongoose");
 const Eco = require("./.gitignore/modules/economie");
