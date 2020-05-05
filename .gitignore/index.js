@@ -7,7 +7,7 @@ var prefix = "!";
 
 mongoose.connect("mongodb+srv://Jyaisseu:er4007rp4011@jyaisseucretaire-jojo-fripouille-zlrys.mongodb.net/Jyaisseucrétaire-Jojo-Fripouille?retryWrites=true&w=majority", {useUnifiedTopology: true, useNewUrlParser: true }).then(() => console.log("MongoDB connecté"))
 
-client.login("Njk3MzgzOTUxODU3MzUyNzE1.XrEK3A.QUZvWDkm42ow1FpO_lhA5_NfGMw")
+client.login("Njk3MzgzOTUxODU3MzUyNzE1.XrExTg.wzyqwgKFVLjnn09RlEj1EQ5lbdg")
 
 client.on("message", message =>{
     if(!message.guild) return
