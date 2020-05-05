@@ -1,7 +1,7 @@
 const Discord = require("discord.js@11.4.2");
 const Discord = require("discord.js@11.5.1");
 const mongoose = require("mongoose");
-const Eco = require("./.gitignore/economie");
+const Eco = require("./.gitignore/modules/economie");
 const client = new Discord.Client();
 var prefix = "!";
 
