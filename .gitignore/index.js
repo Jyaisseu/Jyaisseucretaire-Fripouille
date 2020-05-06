@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const mongoose = require("mongoose");
-const Eco = require("../.gitignore/modules/economie");
+const Eco = require("../modules/economie");
 const client = new Discord.Client();
 var prefix = "!";
 
