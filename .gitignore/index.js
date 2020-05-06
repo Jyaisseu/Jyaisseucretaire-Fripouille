@@ -4,8 +4,6 @@ const Eco = require("../app/modules/economie.js");
 const client = new Discord.Client();
 var prefix = "!";
 
-process.on("--unhandled-rejections=strict")=strict
-
 mongoose.connect("mongodb+srv://Jyaisseu:er4007rp4011@jyaisseuctetaire-fripouille-zlrys.mongodb.net/Jyaisseucrétaire-Jojo-Fripouille?retryWrites=true&w=majority", {useUnifiedTopology: true, useNewUrlParser: true }).catch()
 
 client.login("Njk3MzgzOTUxODU3MzUyNzE1.XrEK3A.QUZvWDkm42ow1FpO_lhA5_NfGMw")
