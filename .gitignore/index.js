@@ -15,12 +15,12 @@ client.on("message", message =>{
 });
 
 client.on("guildMemberAdd", user =>{
-    const channel = user.guild.channels.cache.get("630431095065935884")
+    const channel = user.guild.channels.get("630431095065935884")
     channel.send("Bienvenue <@!" + user.id + "> sur le meilleur serveur francophone que la Terre ait connu!")
 });
 
 client.on("guildMemberRemove", user =>{
-    const channel = user.guild.channels.cache.get("630431095065935884")
+    const channel = user.guild.channels.get("630431095065935884")
     channel.send("Sniff... <@!" + user.id + "> a quitté le serveur! On était si bien pourtant!")
 });
 
