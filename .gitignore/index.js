@@ -34,7 +34,7 @@ Eco.findOne({
             User_ID: message.author.id,
             pseudo: message.author.username,
             xp: 10,
-            level: 1
+            level: 0
         })
         compte.save()
     }else{
