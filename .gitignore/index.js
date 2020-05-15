@@ -42,14 +42,14 @@ Eco.findOne({
         var main_level = economie.level
         var next_level = economie.level * 10
         if(next_level <= economie.xp){
-            economie.xp = 0
             economie.level = main_level +1
+            economie.xp = 0
             message.channel.send(`GG ${message.author} tu viens de passer niveau ${main_level +1} ! Tu deviens de plus en plus BG !`)
         }
         economie.save()
         
         if(message.content === prefix + "level")
-        message.channel.send(`Tu es actuellement BG niveau ${main_level} avec en supplément ${economie.xp} points BG, donc il te manque ${main_level * 10 -economie.xp} points BG pour passer au niveau suivant.`)
+        message.channel.send(`Tu es actuellement BG niveau ${main_level} avec en supplément ${economie.xp} points BG, donc il te manque ${main_level *10 -economie.xp} points BG pour passer au niveau suivant.`)
     }
 })
 });
