@@ -33,15 +33,16 @@ Eco.findOne({
         var compte = new Eco({
             User_ID: message.author.id,
             pseudo: message.author.username,
-            xp: 10,
+            xp: 0,
             level: 1
         })
         compte.save()
     }else{
         economie.xp = economie.xp +1
         var main_level = economie.level
-        var next_level = economie.level * 20
+        var next_level = economie.level * 10
         if(next_level <= economie.xp){
+            economie.xp = 0
             economie.level = main_level +1
             message.channel.send(`GG ${message.author} tu viens de passer niveau ${main_level +1} ! Tu deviens de plus en plus BG !`)
         }
