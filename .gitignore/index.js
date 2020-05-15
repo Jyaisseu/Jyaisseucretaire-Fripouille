@@ -29,6 +29,7 @@ Eco.findOne({
     User_ID: message.author.id
 }, (err, economie) => {
     if(err) console.log(err)
+    if(!message.guild) return
     if(!economie){
         var compte = new Eco({
             User_ID: message.author.id,
