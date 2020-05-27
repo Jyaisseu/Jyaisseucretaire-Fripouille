@@ -45,7 +45,8 @@ Eco.findOne({
         if(next_level <= economie.xp){
             economie.level = main_level +1
             economie.xp = 0
-            message.channel.send(`GG ${message.author} tu viens de passer niveau ${main_level +1} ! Tu deviens de plus en plus BG !`)
+            
+            client.channels.get("715144143306883092").send(`GG ${message.author} tu viens de passer niveau ${main_level +1} ! Tu deviens de plus en plus BG !`)
         }
         economie.save()
         
