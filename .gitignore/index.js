@@ -1,18 +1,45 @@
 const Discord = require("discord.js");
 const mongoose = require("mongoose");
-const Eco = require("../app/modules/economie.js");
+const Eco = require("../app/modules/economie");
+const fs = require("fs");
 const client = new Discord.Client();
+client.commands = new Discord.Collection();
+
+const config = require ("../app/config.json");
+
 var prefix = "!";
 
+fs.readdir("./commandes", (err, files, lengthno) => {
+    if(err) console.log(err);
+    console.log(`${files.length} commandes`);
+    let jsfile = files.filter(f => f.split(".").pop() === "js")
+    if(jsfile.length <= 0){
+        console.log("Commandes non trouvées.");
+        return;
+    }
+
+    jsfile.forEach((f, i,) => {
+        let props = require(`../app/commandes/${f}`);
+        client.commands.set(props.help.name, props);
+    })
+})
 mongoose.connect("mongodb+srv://Jyaisseu:er4007rp4011@jyaisseuctetaire-fripouille-zlrys.mongodb.net/Jyaisseucrétaire-Jojo-Fripouille?retryWrites=true&w=majority", {useUnifiedTopology: true, useNewUrlParser: true })
 
-client.login("Njk3MzgzOTUxODU3MzUyNzE1.XrEK3A.QUZvWDkm42ow1FpO_lhA5_NfGMw")
+client.login(config.token)
 
-client.on("message", message =>{
-    if(!message.guild) return
-    if(message.content === prefix + "coucou")
-        message.channel.send("Et bah coucou à toi aussi, " + message.author.username + " !") 
-});
+client.on("message", async message =>{
+
+    client.emit("checkMessage", message);
+
+    let prefix = config.prefix;
+    let messageArray = message.content.split(" ");
+    let cmd = messageArray[0];
+    let Args = messageArray.slice(1);
+    var args = message.content.substring(prefix.length).split(" ");
+    
+    let commandeFile = client.commands.get(cmd.slice(prefix.length));
+    if(commandeFile) commandeFile.run(client, message, Args, args)    
+})
 
 client.on("guildMemberAdd", user =>{
     const channel = user.guild.channels.get("630431095065935884")
@@ -44,14 +71,11 @@ Eco.findOne({
         var next_level = economie.level * 10
         if(next_level <= economie.xp){
             economie.level = main_level +1
-            economie.xp = 0
+            economie.xp = 0             
             
-            client.channels.get("715144143306883092").send(`GG ${message.author} tu viens de passer niveau ${main_level +1} ! Tu deviens de plus en plus BG !`)
-        }
-        economie.save()
-        
-        if(message.content === prefix + "level")
-        message.channel.send(`Tu es actuellement BG niveau ${main_level} avec en supplément ${economie.xp} points BG, donc il te manque ${main_level *10 -economie.xp} points BG pour passer au niveau suivant.`)
+            client.channels.get("630431095065935884").send(`GG ${message.author} tu viens de passer niveau ${main_level +1} ! Tu deviens de plus en plus BG !`);
+            };
+        economie.save()        
     }
 })
 });
