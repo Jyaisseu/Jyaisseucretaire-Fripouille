@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const mongoose = require("mongoose");
 mongoose.connect("mongodb+srv://Jyaisseu:er4007rp4011@jyaisseuctetaire-fripouille-zlrys.mongodb.net/Jyaisseucrétaire-Jojo-Fripouille?retryWrites=true&w=majority", {useUnifiedTopology: true, useNewUrlParser: true })
-const Eco = require("C:/Users/JOCELYN/Documents/Discord/Jyaisseucrétaire/jojo_la_fripouille/node_modules/modules/economie");
+const Eco = require("../app/modules/economie");
 
 module.exports.run = async (client, message) => {
     Eco.findOne({}, (err, economie) => {
