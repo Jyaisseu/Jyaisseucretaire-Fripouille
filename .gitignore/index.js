@@ -9,7 +9,7 @@ const config = require ("../app/config.json");
 
 var prefix = "!";
 
-fs.readdir("./commandes", (err, files, lengthno) => {
+fs.readdir("../app/commandes", (err, files, lengthno) => {
     if(err) console.log(err);
     console.log(`${files.length} commandes`);
     let jsfile = files.filter(f => f.split(".").pop() === "js")
@@ -48,7 +48,7 @@ client.on("guildMemberAdd", user =>{
 
 client.on("guildMemberRemove", user =>{
     const channel = user.guild.channels.get("630431095065935884")
-    channel.send("Sniff... <@!" + user.id + "> a quitté le serveur! On était si bien pourtant!")
+    channel.send("Sniff... " + user.user.username + " a quitté le serveur! On était si bien pourtant!")
 });
 
 client.on("message", message =>{
