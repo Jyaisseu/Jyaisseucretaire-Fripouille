@@ -68,7 +68,7 @@ Eco.findOne({
     }else{
         economie.xp = economie.xp +1
         var main_level = economie.level
-        var next_level = economie.level *10
+        var next_level = economie.level * 10
         if(next_level <= economie.xp){
             economie.level = main_level +1
             economie.xp = 0             
