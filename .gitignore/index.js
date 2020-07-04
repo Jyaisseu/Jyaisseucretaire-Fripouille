@@ -68,12 +68,12 @@ Eco.findOne({
     }else{
         economie.xp = economie.xp +1
         var main_level = economie.level
-        var next_level = economie.level * 10
+        var next_level = economie.level *10
         if(next_level <= economie.xp){
             economie.level = main_level +1
             economie.xp = 0             
             
-            client.channels.get("630431095065935884").send(`GG ${message.author} tu viens de passer niveau ${main_level +1} ! Tu deviens de plus en plus BG !`);
+            client.channels.get("715144143306883092").send(`GG ${message.author} tu viens de passer niveau ${main_level +1} ! Tu deviens de plus en plus BG !`);
             };
         economie.save()        
     }
