@@ -4,7 +4,8 @@ mongoose.connect("mongodb+srv://Jyaisseu:er4007rp4011@jyaisseuctetaire-fripouill
 const Eco = require('/app/modules/economie.js');
 
 module.exports.run = async (client, message) => {
-    Eco.findOne({}, (err, economie) => {
+    Eco.findOne({
+    User_ID: message.author.id}, (err, economie) => {
         var main_level = economie.level    
         message.channel.send(`Tu es actuellement BG niveau ${main_level} avec en supplément ${economie.xp} points BG, donc il te manque ${main_level * 10 -economie.xp} points pour passer au niveau suivant.`)
     })
