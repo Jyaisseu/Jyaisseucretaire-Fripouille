@@ -66,7 +66,7 @@ Eco.findOne({
         })
         compte.save()
     }else{
-        economie.xp = economie.xp +3
+        economie.xp = economie.xp +1
         var main_level = economie.level
         var next_level = (economie.level +1) * 10
         if(next_level <= economie.xp){
