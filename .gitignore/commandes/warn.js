@@ -6,7 +6,7 @@ module.exports.run = async (bot, message, args) => {
     message.delete()
     if(message.author.bot) return;
     var mentionned = message.mentions.users.first()
-    if(!message.guild.member(message.author).hasPermission("VIEW_AUDIT_LOG")) return message.reply("Désolé, vous n'avez pas la permission d'exécuter cette commande.")
+    if(!message.guild.member(message.author).permissions.has("KICK_MEMBERS")) return message.reply("Désolé, vous n'avez pas la permission d'exécuter cette commande.")
     if(message.mentions.users.size === 0) {
         return message.channel.send("Vous n'avez pas mentionné d'utilisateur !");
     }else{
