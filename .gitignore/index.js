@@ -4,7 +4,7 @@ const Eco = require("/app/modules/economie.js");
 const fs = require("fs");
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
-const config = require (".../app/config.json");
+const config = require ('/app/config.json');
 
 fs.readdir("../app/commandes", (err, files, lengthno) => {
     if(err) console.log(err);
