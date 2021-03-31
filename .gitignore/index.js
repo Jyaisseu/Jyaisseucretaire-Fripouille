@@ -68,11 +68,13 @@ Eco.findOne({
             User_ID: message.author.id,
             pseudo: message.author.username,
             xp: 0,
-            level: 1
+            level: 1,
+            total: 0
         })
         compte.save()
     }else{
         economie.xp = economie.xp +1
+        economie.total = economie.total +1
         var main_level = economie.level
         var next_level = (economie.level +1) * 10
         if(next_level <= economie.xp){
