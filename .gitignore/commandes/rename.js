@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const mongoose = require("mongoose");
-const Eco = require("C:/Users/JOCELYN/Documents/Discord/Jyaisseucrétaire/jojo_la_fripouille/modules/economie");
+const Eco = require("/app/modules/economie.js");
 
 module.exports.run = async (client, message) => {
     Eco.findOne({
