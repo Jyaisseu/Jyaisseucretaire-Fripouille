@@ -1,12 +1,12 @@
 {
   "name": "jojo_la_fripouille",
   "version": "1.0.0",
-  "description": "",
+  "description": "Bot créé par Jyaisseu exclusivement réservé au Serveur de Jojo la Fripouille.",
   "main": "index.js",
   "dependencies": {
-    "discord.js": "^12.5.1",
+    "discord.js": "^12.5.3",
     "fs": "^0.0.1-security",
-    "mongoose": "^5.12.2",
+    "mongoose": "^5.12.5",
     "opusscript": "0.0.8",
     "ytdl-core": "^4.5.0"
   },
@@ -15,6 +15,6 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Jyaisseu",
   "license": "ISC"
 }
