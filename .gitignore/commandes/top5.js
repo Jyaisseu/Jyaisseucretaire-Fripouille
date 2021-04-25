@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const { MessageEmbed } = require("discord.js");
 const mongoose = require("mongoose");
-const Eco = require('/app/modules/economie.js');
+const Eco = require("C:/Users/JOCELYN/Documents/Discord/Jyaisseucrétaire/jojo_la_fripouille/modules/economie");
 
 module.exports.run = async (client, message) => {
     client.getUsers = async guild => {
