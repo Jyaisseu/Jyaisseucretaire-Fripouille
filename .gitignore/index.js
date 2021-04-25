@@ -4,7 +4,6 @@ const Eco = require("/app/modules/economie.js");
 const fs = require("fs");
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
-const config = require ('/app/config.json');
 
 fs.readdir("../app/commandes", (err, files, lengthno) => {
     if(err) console.log(err);
@@ -16,26 +15,28 @@ fs.readdir("../app/commandes", (err, files, lengthno) => {
     }
 
     jsfile.forEach((f, i,) => {
-        let props = require(`../app/commandes/${f}`);
+        let props = require(`./commandes/${f}`);
         client.commands.set(props.help.name, props);
     })
 })
 mongoose.connect("mongodb+srv://Jyaisseu:er4007rp4011@jyaisseuctetaire-fripouille-zlrys.mongodb.net/Jyaisseucrétaire-Jojo-Fripouille?retryWrites=true&w=majority", {useUnifiedTopology: true, useNewUrlParser: true })
 
-client.login("Njk3MzgzOTUxODU3MzUyNzE1.Xo2fag.Y0PpIXZpoZfGr3qhPsS0Jm-Pgxo")
+client.login("process.ENV.TOKEN")
 
 client.on("message", async message =>{
 
     client.emit("checkMessage", message);
 
-    let prefix = config.prefix;
-    let messageArray = message.content.split(" ");
-    let cmd = messageArray[0];
-    let Args = messageArray.slice(1);
-    var args = message.content.substring(prefix.length).split(" ");
+    let prefix = "!";
+    if (message.content.startsWith(prefix)) {
+        let messageArray = message.content.split(" ");
+        let cmd = messageArray[0];
+        let Args = messageArray.slice(1);
+        var args = message.content.substring(prefix.length).split(" ");
     
-    let commandeFile = client.commands.get(cmd.slice(prefix.length));
-    if(commandeFile) commandeFile.run(client, message, Args, args)    
+        let commandeFile = client.commands.get(cmd.slice(prefix.length));
+        if(commandeFile) commandeFile.run(client, message, Args, args)    
+    }
 })
 
 client.on("guildMemberAdd", user =>{
@@ -63,6 +64,7 @@ Eco.findOne({
 }, (err, economie) => {
     if(err) console.log(err)
     if(!message.guild) return
+    if(message.content.startsWith("!give")) return
     if(!economie){
         var compte = new Eco({
             User_ID: message.author.id,
@@ -73,13 +75,17 @@ Eco.findOne({
         })
         compte.save()
     }else{
-        economie.xp = economie.xp +1
-        economie.total = economie.total +1
+        var min = 1
+        var max = 4
+        var bg = (Math.floor(Math.random() * (max - min)) +min)
+        economie.xp = economie.xp + bg
+        economie.total = economie.total +bg
         var main_level = economie.level
         var next_level = (economie.level +1) * 10
         if(next_level <= economie.xp){
+            var reste = economie.xp - next_level
             economie.level = main_level +1
-            economie.xp = 0             
+            economie.xp = reste            
             
             client.channels.cache.get("715144143306883092").send(`GG ${message.author} tu viens de passer niveau ${main_level +1} ! Tu deviens de plus en plus BG !`);
 
@@ -117,13 +123,13 @@ Eco.findOne({
                 const empereur = message.member.guild.roles.cache.get("749246081942159370")
                 client.channels.cache.get("630431095065935884").send(`L'heure est grave... ${message.author} est sacré empereur de ce serveur ! Vive l'empereur !`)
             }else{
-            if(economie.level === 100){
-                const member = message.author.id
-                message.member.roles.remove("749246081942159370")
-                message.member.roles.add("749246155053072405")
-                const dieu = message.member.guild.roles.cache.get("749246155053072405")
-                client.channels.cache.get("630431095065935884").send(`Sa venue nous était annoncée... ${message.author} s'est éveillé en temps que ${dieu} de ce serveur ! Que gloire et fierté lui soit alloué !`)
-            }
+                if(economie.level === 100){
+                    const member = message.author.id
+                    message.member.roles.remove("749246081942159370")
+                    message.member.roles.add("749246155053072405")
+                    const dieu = message.member.guild.roles.cache.get("749246155053072405")
+                    client.channels.cache.get("630431095065935884").send(`Sa venue nous était annoncée... ${message.author} s'est éveillé en temps que ${dieu} de ce serveur ! Que gloire et fierté lui soit alloué !`)
+                }
             }}}}}        
         };
         economie.save()        
