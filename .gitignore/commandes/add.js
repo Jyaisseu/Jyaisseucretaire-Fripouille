@@ -16,7 +16,8 @@ module.exports.run = async (bot, message, args) => {
         }, (err, economie) => {
             var somme = args.slice(1)
             var ajout = parseInt(somme)
-            economie.xp = (economie.xp + ajout)
+            economie.xp = economie.xp + ajout
+            economie.total = economie.total +ajout
             message.channel.send(`Le membre ${mentionned} a bien reçu ${ajout} points BG !`)
             var main_level = economie.level
             var next_level = (economie.level +1) * 10                                      
