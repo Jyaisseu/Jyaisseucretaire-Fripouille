@@ -21,7 +21,7 @@ fs.readdir("../app/commandes", (err, files, lengthno) => {
 })
 mongoose.connect("mongodb+srv://Jyaisseu:er4007rp4011@jyaisseuctetaire-fripouille-zlrys.mongodb.net/Jyaisseucrétaire-Jojo-Fripouille?retryWrites=true&w=majority", {useUnifiedTopology: true, useNewUrlParser: true })
 
-client.login("process.ENV.TOKEN")
+client.login(process.ENV.TOKEN)
 
 client.on("message", async message =>{
 
