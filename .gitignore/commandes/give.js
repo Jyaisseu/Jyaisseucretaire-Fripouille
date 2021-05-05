@@ -28,7 +28,7 @@ module.exports.run = async (client, message, args) => {
                     economie.xp = ((economie.level +1) *10) -enplus
                     var moins = 0 -economie.xp
                 }while (moins >0)
-                message.client.channels.get("715144143306883092").send(`${message.author} est redescendu niveau ${economie.level} en faisant un don à ${mentionned} !`)
+                message.client.channels.cache.get("715144143306883092").send(`${message.author} est redescendu niveau ${economie.level} en faisant un don à ${mentionned} !`)
             }else{
                 economie.xp = economie.xp - donna
             }
