@@ -80,6 +80,8 @@ Eco.findOne({
         var bg = (Math.floor(Math.random() * (max - min)) +min)
         economie.xp = economie.xp + bg
         economie.total = economie.total +bg
+        if(message.author.username === economie.pseudo) {
+        }else{economie.pseudo = message.author.username}
         var main_level = economie.level
         var next_level = (economie.level +1) * 10
         if(next_level <= economie.xp){
@@ -137,38 +139,22 @@ Eco.findOne({
 })
 });
 
-var go;
-var go2;
 function getRandomDate() {
     var jmin = 2
     var jmax = 21
     var jour = (Math.floor(Math.random() * (jmax - jmin)) +jmin)
-    var today = new Date().toLocaleString('fr-FR', {
-        timeZone: 'Europe/Paris'
-    });
+    var today = new Date();
     var date = today.getDate()
     if(date === jour ) {
-        go = setTimeout(getRandomHour)
-        clearInterval(intervalle);
-    function getRandomHour() {
-    var jour = true
-    if(jour === true){
-        var hmin = 1
-        var hmax = 25
+        var hmin = 0
+        var hmax = 23
         var heure = (Math.floor(Math.random() * (hmax - hmin)) +hmin)
-        var today = new Date().toLocaleString('fr-FR', {
-            timeZone: 'Europe/Paris'
-        })
+        var today = new Date();
         var giveaway = today.getHours()
         if(giveaway === heure) {
-            client.channels.cache.get("630431095065935884").send(`Le premier qui envoie "je prends" reçoit 100 points BG ! `);
-            go2 = setTimeout(waitforWin)
-            clearInterval(cadeau);
-        }
-    } function waitforWin() {
-        var start = true
+            client.channels.cache.get("630431095065935884").send(`Le premier qui envoie "je prends" reçoit 100 points BG ! `)
+            clearInterval(repeter)
         client.on("message", message => {
-        if(start === true) {
             if(message.content === "je prends") {
                 var auteur = message.guild.member(message.author)
                 Eco.findOne({
@@ -245,9 +231,7 @@ function getRandomDate() {
                     }}}}}
                 }
                 economie.save()})
-            }
-        }})
-    }
-winner = setInterval(waitforWin, 60000)}
-cadeau = setInterval(getRandomHour, 60000)}}
-intervalle = setInterval(getRandomDate, 3600000)
+            }})}
+}}
+
+var repeter = setInterval(getRandomDate, 3600000)
