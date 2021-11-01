@@ -12,7 +12,7 @@ module.exports.run = async (client, message) => {
     .addField("!play [URL YouTube]", "Joue une musique dans le salon vocal où tu te trouves.")
     .addField("!stop", "Déconnecte le bot du salon vocal où tu te trouves.")
     .addField("!help", "Affiche la liste des commandes disponibles")
-    message.channel.send(embed);
+    message.channel.send({ embeds: [embed] });
 }
 
 module.exports.help = {
