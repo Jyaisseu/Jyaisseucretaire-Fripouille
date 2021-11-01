@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Eco = require("/app/modules/economie.js");
 const fs = require("fs");
 const { Client, Intents } = require('discord.js');
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 client.commands = new Discord.Collection();
 
 fs.readdir("../app/commandes", (err, files, lengthno) => {
