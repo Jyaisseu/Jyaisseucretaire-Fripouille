@@ -1,5 +1,5 @@
 const ytdl = require('ytdl-core');
-const MessageCreate = require("discord.js");
+const messageCreate = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
     if(!message.member.voice.channel)
