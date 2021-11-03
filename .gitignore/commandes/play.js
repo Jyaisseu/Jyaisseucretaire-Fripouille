@@ -1,4 +1,5 @@
 const ytdl = require('ytdl-core');
+const MessageCreate = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
     if(!message.member.voice.channel)
@@ -12,7 +13,7 @@ module.exports.run = async (bot, message, args) => {
     if(!validate) return message.channel.send("L'URL Youtube n'est pas valide !");
 
     const info = await ytdl.getInfo(args[0]);
-    const connection = await message.member.voice.channel.join();
+    const connection = await messageCreate.member.voice.channel.join();
     const dispatcher = await connection.play(
         ytdl(args[0], { filter: 'audioonly'})
     );
