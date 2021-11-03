@@ -17,7 +17,7 @@ module.exports.run = async (client, message) => {
             embed.addField(e.pseudo, `BG niveau ${e.level} avec ${e.xp} points BG`);
         });
     });
-    message.channel.send(embed);
+    message.channel.send({ embeds: [embed] });
 }
 
 module.exports.help = {
