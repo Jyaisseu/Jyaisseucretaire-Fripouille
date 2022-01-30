@@ -1,6 +1,9 @@
 {
   "name": "jojo_la_fripouille",
   "version": "1.9.2",
+  "engines": {
+    "node": "16.6.x"
+  }
   "description": "Bot créé par Jyaisseu exclusivement réservé au Serveur de Jojo la Fripouille.",
   "main": "index.js",
   "dependencies": {
