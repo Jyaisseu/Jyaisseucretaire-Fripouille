@@ -14,7 +14,7 @@ module.exports.run = async (client, message) => {
     .setDescription("Mais en vrai vous êtes tous un peu BG ici")
     await client.getUsers(message.guild).then(p => {
         p.sort((a, b) => (a.total < b.total) ? 1 : -1).splice(0, 5).forEach(e => {
-            embed.addField(e.pseudo, `BG niveau ${e.level} avec ${e.xp} points BG`);
+            topembed.addField(e.pseudo, `BG niveau ${e.level} avec ${e.xp} points BG`);
         });
     });
     message.channel.send({embeds: [topembed]});
