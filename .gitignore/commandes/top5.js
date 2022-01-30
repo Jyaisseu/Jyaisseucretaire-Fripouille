@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const { MessageEmbed } = require("discord.js");
 const mongoose = require("mongoose");
-const Eco = require('/app/modules/economie.js');
+const Eco = require("C:/Users/jocel/OneDrive/Documents/Jyaisseucrétaire/jojo_la_fripouille/modules/economie");
 
 module.exports.run = async (client, message) => {
     client.getUsers = async guild => {
@@ -9,7 +9,7 @@ module.exports.run = async (client, message) => {
         if (data) return data;
         else return;
     };
-    const embed = new MessageEmbed()
+    const topembed = new MessageEmbed()
     .setTitle("Top 5 des plus BGs du serveur")
     .setDescription("Mais en vrai vous êtes tous un peu BG ici")
     await client.getUsers(message.guild).then(p => {
@@ -17,7 +17,7 @@ module.exports.run = async (client, message) => {
             embed.addField(e.pseudo, `BG niveau ${e.level} avec ${e.xp} points BG`);
         });
     });
-    message.channel.send({ embeds: [embed] });
+    message.channel.send({embeds: [topembed]});
 }
 
 module.exports.help = {
