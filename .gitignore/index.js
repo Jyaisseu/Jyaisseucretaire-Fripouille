@@ -20,9 +20,9 @@ fs.readdir("./commandes", (err, files, lengthno) => {
         client.commands.set(props.help.name, props);
     })
 })
-mongoose.connect(process.ENV.DATABASE, {useUnifiedTopology: true, useNewUrlParser: true })
+mongoose.connect(process.env.DATABASE, {useUnifiedTopology: true, useNewUrlParser: true })
 
-client.login(process.ENV.TOKEN)
+client.login(process.env.TOKEN)
 
 client.on("message", async message =>{
 
