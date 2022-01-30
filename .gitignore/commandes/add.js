@@ -1,12 +1,12 @@
 const Discord = require("discord.js")
 const mongoose = require("mongoose")
-const Eco = require('/app/modules/economie.js')
+const Eco = require("/app/modules/economie")
 
 module.exports.run = async (client, message, args) => {
 
     if(message.author.bot) return;
     var mentionned = message.mentions.members.first()
-    if(!message.guild.member(message.author).permissions.has("ADMINISTRATOR")) return message.reply("Désolé, vous n'avez pas la permission d'exécuter cette commande.")
+    if(!message.member.permissions.has("ADMINISTRATOR")) return message.reply("Désolé, vous n'avez pas la permission d'exécuter cette commande.")
     if(message.mentions.users.size === 0) return message.channel.send("Vous n'avez pas mentionné d'utilisateur !")
     if(mentionned.id === message.author.id) return message.channel.send("Désolé, vous ne pouvez pas vous donner vous-même des points BG!")
     if(args.slice(1) >0) {
