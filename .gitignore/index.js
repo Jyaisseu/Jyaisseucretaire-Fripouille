@@ -33,7 +33,7 @@ fs.readdir('./commandes', (err, files) => {
     });
 });
 
-mongoose.connect('mongodb+srv://Jyaisseu:er4007rp4011@jyaisseuctetaire-fripouille-zlrys.mongodb.net/Jyaisseucrétaire-Jojo-Fripouille?retryWrites=true&w=majority', {useUnifiedTopology: true, useNewUrlParser: true}).then(() => console.log('La base de données est connectée.'));
+mongoose.connect(process.ENV.DATABASE, {useUnifiedTopology: true, useNewUrlParser: true}).then(() => console.log('La base de données est connectée.'));
 
 Client.on('messageCreate', async message => {
     Client.emit('checkMessage', message);
@@ -50,7 +50,7 @@ Client.on('messageCreate', async message => {
     };
 });
 
-Client.login('Njk2MzU5NTA0NDk2OTUxMzc3.GQsqB1.gx_YpwP8AGwQI6sSafW6CSLvHNycqmOjIqmtKg');
+Client.login('process.ENV.TOKEN');
 
 Client.on('guildMemberAdd', member => {
     console.log('Un membre est arrivé.');
