@@ -1,24 +1,20 @@
 {
-  "name": "jojo_la_fripouille",
-  "version": "1.9.2",
-  "engines": {
-    "node": "16.6.x"
-  },
-  "description": "Bot créé par Jyaisseu exclusivement réservé au Serveur de Jojo la Fripouille.",
-  "main": "index.js",
   "dependencies": {
-    "@discordjs/voice": "^0.8.0",
-    "discord.js": "^13.6.0",
+    "@discordjs/voice": "^0.9.0",
+    "discord.js": "^13.7.0",
     "fs": "^0.0.1-security",
-    "libsodium-wrappers": "^0.7.9",
-    "mongoose": "^6.1.8",
-    "opusscript": "0.0.8",
-    "ytdl-core": "^4.10.1"
+    "libsodium-wrappers": "^0.7.10",
+    "mongoose": "^6.3.4",
+    "ytdl-core": "^4.11.0"
   },
+  "name": "jyaisseucretaire",
+  "version": "2.0.0",
+  "description": "Probablement le meilleur bot de l'Univers.",
+  "main": "index.js",
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "Jyaisseu",
   "license": "ISC"
 }
