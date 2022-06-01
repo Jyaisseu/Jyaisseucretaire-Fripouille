@@ -7,9 +7,9 @@
     "mongoose": "^6.3.4",
     "ytdl-core": "^4.11.0"
   },
-  "name": "jyaisseucretaire",
-  "version": "2.0.0",
-  "description": "Probablement le meilleur bot de l'Univers.",
+  "name": "jyaisseucretaire-beta",
+  "version": "2.1",
+  "description": "La version de test du fameux bot.",
   "main": "index.js",
   "devDependencies": {},
   "scripts": {
