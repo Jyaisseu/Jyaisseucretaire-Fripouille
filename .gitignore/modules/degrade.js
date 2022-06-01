@@ -1,10 +1,10 @@
-module.exports.run = async (Client, message, economie, perdant) => {
-    debutant = message.guild.roles.cache.find(role => role.name === 'Débutant');
-    actif = message.guild.roles.cache.find(role => role.name === 'Actif');
-    hyperactif = message.guild.roles.cache.find(role => role.name === 'Hyperactif');
-    hermite = message.guild.roles.cache.find(role => role.name === 'Hermite');
-    empereur = message.guild.roles.cache.find(role => role.name === 'Empereur');
-    dieu = message.guild.roles.cache.find(role => role.name === 'Dieu');
+module.exports.run = async (Client, interaction, economie, perdant) => {
+    debutant = interaction.guild.roles.cache.find(role => role.name === 'Débutant');
+    actif = interaction.guild.roles.cache.find(role => role.name === 'Actif');
+    hyperactif = interaction.guild.roles.cache.find(role => role.name === 'Hyperactif');
+    hermite = interaction.guild.roles.cache.find(role => role.name === 'Hermite');
+    empereur = interaction.guild.roles.cache.find(role => role.name === 'Empereur');
+    dieu = interaction.guild.roles.cache.find(role => role.name === 'Dieu');
 
     if(economie.level < 2) {
         perdant.roles.remove(debutant, actif, hyperactif, hermite, empereur, dieu);
