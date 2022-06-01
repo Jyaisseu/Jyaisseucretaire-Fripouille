@@ -1,11 +1,11 @@
-module.exports.run = async (Client, message, economie, acquerreur) => {
+module.exports.run = async (Client, interaction, economie, acquerreur) => {
     const member = acquerreur
-    const debutant = message.guild.roles.cache.find(role => role.name === 'Débutant');
-    const actif = message.guild.roles.cache.find(role => role.name === 'Actif');
-    const hyperactif = message.guild.roles.cache.find(role => role.name === 'Hyperactif');
-    const hermite = message.guild.roles.cache.find(role => role.name === 'Hermite');
-    const empereur = message.guild.roles.cache.find(role => role.name === 'Empereur');
-    const dieu = message.guild.roles.cache.find(role => role.name === 'Dieu');
+    const debutant = interaction.guild.roles.cache.find(role => role.name === 'Débutant');
+    const actif = interaction.guild.roles.cache.find(role => role.name === 'Actif');
+    const hyperactif = interaction.guild.roles.cache.find(role => role.name === 'Hyperactif');
+    const hermite = interaction.guild.roles.cache.find(role => role.name === 'Hermite');
+    const empereur = interaction.guild.roles.cache.find(role => role.name === 'Empereur');
+    const dieu = interaction.guild.roles.cache.find(role => role.name === 'Dieu');
 
     if(economie.level === 2){
         member.roles.add(debutant);
