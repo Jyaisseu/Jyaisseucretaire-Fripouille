@@ -45,7 +45,7 @@ fs.readdir('./commandes', (err, files) => {
     });
 });
 
-mongoose.connect('process.ENV.DATABASE', {useUnifiedTopology: true, useNewUrlParser: true}).then(() => console.log('La base de données est connectée.'));
+mongoose.connect('process.env.DATABASE', {useUnifiedTopology: true, useNewUrlParser: true}).then(() => console.log('La base de données est connectée.'));
 
 Client.on('interactionCreate', async interaction => {
     if(interaction.isCommand()){
@@ -57,7 +57,7 @@ Client.on('interactionCreate', async interaction => {
     };
 });
 
-Client.login('process.ENV.TOKEN');
+Client.login('process.env.TOKEN');
 
 Client.on('guildMemberAdd', member => {
     console.log('Un membre est arrivé.');
