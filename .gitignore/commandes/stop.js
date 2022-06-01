@@ -2,18 +2,18 @@ const {
     joinVoiceChannel,
 } = require('@discordjs/voice');
 
-module.exports.run = async(Client, message) => {
-    if(!message.member.voice.channel) return message.channel.send('Connectez vous à un salon vocal !');
-    if(!message.guild.me.voice.channel) return message.channel.send('Le bot ne joue actuellement pas de musique !');
-    if(message.guild.me.voice.channel.id !== message.member.voice.channel.id) return message.channel.send('Vous devez être connecté dans le même salon vocal que le bot !');
+module.exports.run = async(Client, interaction) => {
+    if(!interaction.member.voice.channel) return interaction.reply('Connectez vous à un salon vocal !');
+    if(!interaction.guild.me.voice.channel) return interaction.reply('Le bot ne joue actuellement pas de musique !');
+    if(interaction.guild.me.voice.channel.id !== interaction.member.voice.channel.id) return interaction.reply('Vous devez être connecté dans le même salon vocal que le bot !');
 
     const connexion = joinVoiceChannel({
-        channelId: message.member.voice.channel.id, 
-        guildId: message.guild.id,
-        adapterCreator: message.guild.voiceAdapterCreator
+        channelId: interaction.member.voice.channel.id, 
+        guildId: interaction.guild.id,
+        adapterCreator: interaction.guild.voiceAdapterCreator
     });
     connexion.destroy();
-    message.channel.send('La musique a correctement été arrêtée !');
+    interaction.reply('La musique a correctement été arrêtée !');
 };
 
 module.exports.help = {
