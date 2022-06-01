@@ -5,22 +5,21 @@ const {
     createAudioResource
 } = require('@discordjs/voice');
 
-module.exports.run = async (Client, message, args) => {
-    if(!message.member.voice.channel) return message.channel.send('Connectez-vous à un salon vocal !');
-    if(message.guild.me.voice.channel) return message.channel.send('Le bot est déjà en train de jouer une musique !');
-    if(!args[0]) return message.channel.send("Vous n'avez pas précisé de lien YouTube !");
+module.exports.run = async (Client, interaction) => {
+    if(!interaction.member.voice.channel) return interaction.reply('Connectez-vous à un salon vocal !');
+    if(interaction.guild.me.voice.channel) return interaction.reply('Le bot est déjà en train de jouer une musique !');
 
-    const validate = await ytdl.validateURL(args[0]);
-    if(!validate) return message.channel.send("L'URL YouTube n'est pas valide !");
+    const validate = await ytdl.validateURL(interaction.options.getString('lien'));
+    if(!validate) return interaction.reply("L'URL YouTube n'est pas valide !");
 
-    const info = await ytdl.getInfo(args[0]);
+    const info = await ytdl.getInfo(interaction.options.getString('lien'));
     const connexion = joinVoiceChannel({
-        channelId: message.member.voice.channel.id,
-        guildId: message.guild.id,
-        adapterCreator: message.guild.voiceAdapterCreator
+        channelId: interaction.member.voice.channel.id,
+        guildId: interaction.guild.id,
+        adapterCreator: interaction.guild.voiceAdapterCreator
     });
 
-    const stream = ytdl(args[0], {
+    const stream = ytdl(interaction.options.getString('lien'), {
         filter: 'audioonly'
     });
     const player = createAudioPlayer();
@@ -29,7 +28,7 @@ module.exports.run = async (Client, message, args) => {
     player.play(ressource);
     connexion.subscribe(player);
 
-    message.channel.send(`Musique jouée : ${info.videoDetails.title}.`);
+    interaction.reply(`Musique jouée : ${info.videoDetails.title}.`);
 };
 
 module.exports.help = {
