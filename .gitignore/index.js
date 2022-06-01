@@ -8,6 +8,9 @@ const Client = new Discord.Client({
         Discord.Intents.FLAGS.GUILD_MESSAGES
     ]
 });
+const {
+    SlashCommandBuilder
+} = require('@discordjs/builders');
 Client.commands = new Discord.Collection();
 const fs = require('fs');
 const mongoose = require('mongoose');
@@ -15,6 +18,15 @@ const Eco = require('./modules/economie');
 const grade = require('./modules/grade');
 
 Client.on('ready', () => {
+    Client.application.commands.create(add);
+    Client.application.commands.create(coucou);
+    Client.application.commands.create(give);
+    Client.application.commands.create(level);
+    Client.application.commands.create(play);
+    Client.application.commands.create(remove);
+    Client.application.commands.create(stop);
+    Client.application.commands.create(top5);
+
     console.log('Le bot est prêt !');
 });
 
@@ -33,20 +45,15 @@ fs.readdir('./commandes', (err, files) => {
     });
 });
 
-mongoose.connect(process.ENV.DATABASE, {useUnifiedTopology: true, useNewUrlParser: true}).then(() => console.log('La base de données est connectée.'));
+mongoose.connect('process.ENV.DATABASE', {useUnifiedTopology: true, useNewUrlParser: true}).then(() => console.log('La base de données est connectée.'));
 
-Client.on('messageCreate', async message => {
-    Client.emit('checkMessage', message);
+Client.on('interactionCreate', async interaction => {
+    if(interaction.isCommand()){
 
-    let prefix = '!';
-    if (message.content.startsWith(prefix)) {
-        let messageArray = message.content.split(' ');
-        let cmd = messageArray[0];
-        let Args = messageArray.slice(1);
-        let args = message.content.substring(prefix.length).split(' ');
-
-        let commandeFile = Client.commands.get(cmd.slice(prefix.length));
-        if(commandeFile) commandeFile.run(Client, message, Args, prefix, args);
+        let messageArray = interaction.commandName;
+        let args = interaction.options;
+        let commandeFile = Client.commands.get(messageArray);
+        if(commandeFile) commandeFile.run(Client, interaction);
     };
 });
 
@@ -107,3 +114,70 @@ Client.on('messageCreate', message => {
         };
     });
 });
+
+const add = new SlashCommandBuilder()
+    .setName('add')
+    .setDescription("[ADMIN ONLY] Permet d'ajouter des points BG à une personne du serveur.")
+    .addUserOption(option => option
+        .setName('utilisateur')
+        .setDescription('Utilisateur à mentionner')
+        .setRequired(true)
+    )
+    .addIntegerOption(option => option
+        .setName('quantité')
+        .setDescription('Nombre de points à ajouter')
+        .setRequired(true)
+    );
+
+const coucou = new SlashCommandBuilder()
+    .setName('coucou')
+    .setDescription("Pour que le bot puisse te rappeler qu'il sera toujours là pour toi !")
+
+const give = new SlashCommandBuilder()
+    .setName('give')
+    .setDescription('Permet de donner une partie de ses points BG à une autre personne.')
+    .addUserOption(option => option
+        .setName('utilisateur')
+        .setDescription('Utilisateur à mentionner')
+        .setRequired(true)
+    )
+    .addIntegerOption(option => option
+        .setName('quantité')
+        .setDescription('Nombre de points à donner')
+        .setRequired(true)
+    );
+
+const level = new SlashCommandBuilder()
+    .setName('level')
+    .setDescription('Affiche ton niveau de BG actuel.');
+
+const remove = new SlashCommandBuilder()
+    .setName('remove')
+    .setDescription('[ADMIN ONLY] Permet de retirer des points BG à un membre du serveur.')
+    .addUserOption(option => option
+        .setName('utilisateur')
+        .setDescription('Utilisateur à mentionner')
+        .setRequired(true)
+    )
+    .addIntegerOption(option => option
+        .setName('quantité')
+        .setDescription('Nombre de pooints à retirer')
+        .setRequired(true)
+    );
+
+const stop = new SlashCommandBuilder()
+    .setName('stop')
+    .setDescription('Permet de stopper la musique.');
+
+const top5 = new SlashCommandBuilder()
+    .setName('top5')
+    .setDescription('Affiche le top 5 des personnes les plus BG de ce serveur');
+
+const play = new SlashCommandBuilder()
+    .setName('play')
+    .setDescription('Permet de jouer une musique dans le salon où tu te trouves')
+    .addStringOption(option => option
+        .setName('lien')
+        .setDescription('lien pour jouer la musique')
+        .setRequired(true)
+    );
