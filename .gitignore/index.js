@@ -45,7 +45,7 @@ fs.readdir('./commandes', (err, files) => {
     });
 });
 
-mongoose.connect(process.env.DATABASE, {useUnifiedTopology: true, useNewUrlParser: true}).then(() => console.log('La base de données est connectée.'));
+mongoose.connect('process.env.DATABASE', {useUnifiedTopology: true, useNewUrlParser: true}).then(() => console.log('La base de données est connectée.'));
 
 Client.on('interactionCreate', async interaction => {
     if(interaction.isCommand()){
@@ -57,7 +57,7 @@ Client.on('interactionCreate', async interaction => {
     };
 });
 
-Client.login(process.env.TOKEN);
+Client.login('process.env.TOKEN');
 
 Client.on('guildMemberAdd', member => {
     console.log('Un membre est arrivé.');
@@ -103,7 +103,7 @@ Client.on('messageCreate', message => {
             if(next_level <= economie.xp){
                 let reste = economie.xp - next_level;
                 economie.level = main_level + 1;
-                economie.xp = reste
+                economie.xp = reste;
 
                 Client.channels.cache.find(channel => channel.name === '📈levelup').send(`GG ${message.author} tu viens de passer niveau ${main_level + 1} ! Tu deviens de plus en plus BG !`);
 
@@ -113,6 +113,65 @@ Client.on('messageCreate', message => {
             economie.save();
         };
     });
+});
+
+let liste_vocal = [];
+Client.on('voiceStateUpdate', (oldMember, newMember) => {
+    let newUserChannel = newMember.channel;
+    let oldUserChannel = oldMember.channel;
+    let rejoint = newMember.member.user;
+    if(oldUserChannel === null && newUserChannel !== undefined) {
+        date = Date.now();
+        let membre = {
+            pseudo: rejoint.username,
+            arrive: date
+        };
+        liste_vocal.push(membre);
+    }else if (newUserChannel === null) {
+        for (var i in liste_vocal) {
+            if (Object.values(liste_vocal[i])[0] === rejoint.username) {
+                var sortant = liste_vocal[i];
+            };
+        };
+        let date = Date.now();
+        let temps = parseInt((date - Object.values(sortant)[1])/60000);
+        delete liste_vocal[i];
+        Eco.findOne({
+            User_ID: rejoint.id
+        }, (err, economie) => {
+            if(err) console.log(err);
+            if(!economie) {
+                let compte = new Eco({
+                    User_ID: rejoint.id,
+                    pseudo: rejoint.username,
+                    xp: 0,
+                    level: 1,
+                    total: 0
+                });
+                compte.save();
+            }else{
+                let bg = (Math.floor(Math.random() * (temps)) + temps);
+                economie.xp += bg;
+                economie.total += bg;
+                if(!rejoint.username === economie.pseudo) {
+                    economie.pseudo = rejoint.username;
+                };
+
+                let main_level = economie.level;
+                let next_level = (economie.level + 1) * 10;
+                rejoint.send(`Vous avez passé ${temps} minutes en vocal, vous avez gagné ${bg} points BG.`);
+                if(next_level <= economie.xp) {
+                    let reste = economie.xp - next_level;
+                    economie.level = main_level + 1;
+                    economie.xp = reste;
+                    Client.channels.cache.find(channel => channel.name === '📈levelup').send(`GG ${message.author} tu viens de passer niveau ${main_level + 1} ! Tu deviens de plus en plus BG !`);
+                    acquerreur = newMember.member;
+                    grade.run(Client, Discord.Message, economie, acquerreur);
+                };
+                economie.save();
+            };
+        });
+    };
 });
 
 const add = new SlashCommandBuilder()
