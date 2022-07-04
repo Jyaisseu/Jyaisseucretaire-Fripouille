@@ -8,7 +8,7 @@
     "ytdl-core": "^4.11.0"
   },
   "name": "jyaisseucretaire-beta",
-  "version": "2.1",
+  "version": "2.2",
   "description": "La version de test du fameux bot.",
   "main": "index.js",
   "devDependencies": {},
