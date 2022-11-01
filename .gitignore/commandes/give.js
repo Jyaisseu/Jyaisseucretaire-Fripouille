@@ -3,7 +3,7 @@ const grade = require('../modules/grade');
 const degrade = require('../modules/degrade');
 const { ModalSubmitInteraction } = require('discord.js');
 
-module.exports.run = async (Client, interaction) => {
+module.exports.run = async (client, interaction) => {
 
     const mentionned = interaction.options.getUser('utilisateur');
     const auteur = interaction.member;
@@ -25,12 +25,12 @@ module.exports.run = async (Client, interaction) => {
                     economie.xp = 0;
                     economie.level -= 1;
                     economie.xp = ((economie.level + 1) * 10) - enplus;
-                    let moins = 0 - economie.xp;
+                    var moins = 0 - economie.xp;
                 }while (moins > 0);
-                Client.channel.cache.find(channel => channel.name === '📈levelup').send(`${auteur} est redescendu niveau ${economie.level} en faisant un don à ${mentionned} !`);
+                client.channels.cache.find(channel => channel.name === '📈levelup').send(`${auteur} est redescendu niveau ${economie.level} en faisant un don à ${mentionned} !`);
 
                 perdant = auteur;
-                degrade.run(Client, interaction, economie, perant);
+                degrade.run(client, interaction, economie, perdant);
             }else{
                 economie.xp = economie.xp - donna;
             }economie.save();
@@ -55,10 +55,10 @@ module.exports.run = async (Client, interaction) => {
                     economie.level = main_level + 1;
                     economie.xp = 0 + reste;
                 }while (next_level <= economie.xp);
-                Client.channels.cache.find(channel => channel.name === '💬général').send(`GG ${mentionned} tu viens de passer BG niveau ${economie.level} grâce à un don de ${auteur} ! Tu deviens de plus en plus BG !`);
+                client.channels.cache.find(channel => channel.name === '💬général').send(`GG ${mentionned} tu viens de passer BG niveau ${economie.level} grâce à un don de ${auteur} ! Tu deviens de plus en plus BG !`);
 
                 acquerreur = mentionned;
-                grade.run(Client, interaction, economie, acquerreur);
+                grade.run(client, interaction, economie, acquerreur);
             }economie.save();
         })
     };
