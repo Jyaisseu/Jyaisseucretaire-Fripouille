@@ -1,7 +1,7 @@
 const Eco = require('../modules/economie');
 const degrade = require('../modules/degrade');
 
-module.exports.run = async (Client, interaction) => {
+module.exports.run = async (client, interaction) => {
     let mentionned = interaction.options.getUser('utilisateur');
     if(!interaction.member.permissions.has('ADMINISTRATOR')) return interaction.reply("Désolé, vous n'avez pas la permission d'exécuter cette commande.");
     if(mentionned.id === interaction.member.id) return interaction.reply('Désolé, vous ne pouvez pas vous enlever à vous-même des points BG !');
@@ -21,10 +21,10 @@ module.exports.run = async (Client, interaction) => {
                     var negatif = 0 - economie.xp;
                 }while (negatif > 0);
                 
-                Client.channels.cache.find(channel => channel.name === '📈levelup').send(`${mentionned} est redescendu niveau ${economie.level} !`);
+                client.channels.cache.find(channel => channel.name === '📈levelup').send(`${mentionned} est redescendu niveau ${economie.level} !`);
                 perdant = mentionned;
                 console.log('allo ?');
-                degrade.run(Client, interaction, economie, perdant);
+                degrade.run(client, interaction, economie, perdant);
             }else{
                 economie.xp = (economie.xp - perte);
             };
