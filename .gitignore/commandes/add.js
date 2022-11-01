@@ -1,7 +1,7 @@
 const Eco = require('../modules/economie');
 const grade = require('../modules/grade');
 
-module.exports.run = async (Client, interaction) => {
+module.exports.run = async (client, interaction) => {
 
     let mentionned = interaction.options.getUser('utilisateur');
     if(!interaction.member.permissions.has('ADMINISTRATOR')) return interaction.reply("Désolé, vous n'avez pas la permission d'exécuter cette commande");
@@ -26,10 +26,10 @@ module.exports.run = async (Client, interaction) => {
                     economie.xp = 0 + reste;
                 } while (next_level <= economie.xp);
 
-                Client.channels.cache.find(channel => channel.name === '📈levelup').send(`GG ${mentionned} tu viens de passer niveau ${main_level + 1} ! Tu deviens de plus en plus BG !`);
+                client.channels.cache.find(channel => channel.name === '📈levelup').send(`GG ${mentionned} tu viens de passer niveau ${main_level + 1} ! Tu deviens de plus en plus BG !`);
 
                 acquerreur = mentionned
-                grade.run(Client, interaction, economie, acquerreur);
+                grade.run(client, interaction, economie, acquerreur);
             }economie.save();
         });
     }else{
