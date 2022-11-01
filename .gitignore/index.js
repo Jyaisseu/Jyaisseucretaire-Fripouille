@@ -1,31 +1,35 @@
 const Discord = require('discord.js');
-const Client = new Discord.Client({
+const {
+    Client,
+    GatewayIntentBits
+} = require('discord.js');
+const client = new Client({
     intents: [
-        Discord.Intents.FLAGS.GUILDS, 
-        Discord.Intents.FLAGS.GUILD_MEMBERS, 
-        Discord.Intents.FLAGS.GUILD_VOICE_STATES, 
-        Discord.Intents.FLAGS.GUILD_PRESENCES,
-        Discord.Intents.FLAGS.GUILD_MESSAGES
+        GatewayIntentBits.Guilds, 
+        GatewayIntentBits.GuildMembers, 
+        GatewayIntentBits.GuildVoiceStates, 
+        GatewayIntentBits.GuildPresences,
+        GatewayIntentBits.GuildMessages
     ]
 });
 const {
     SlashCommandBuilder
 } = require('@discordjs/builders');
-Client.commands = new Discord.Collection();
+client.commands = new Discord.Collection();
 const fs = require('fs');
 const mongoose = require('mongoose');
 const Eco = require('./modules/economie');
 const grade = require('./modules/grade');
 
-Client.on('ready', () => {
-    Client.application.commands.create(add);
-    Client.application.commands.create(coucou);
-    Client.application.commands.create(give);
-    Client.application.commands.create(level);
-    Client.application.commands.create(play);
-    Client.application.commands.create(remove);
-    Client.application.commands.create(stop);
-    Client.application.commands.create(top5);
+client.on('ready', () => {
+    client.application.commands.create(add);
+    client.application.commands.create(coucou);
+    client.application.commands.create(give);
+    client.application.commands.create(level);
+    client.application.commands.create(play);
+    client.application.commands.create(remove);
+    client.application.commands.create(stop);
+    client.application.commands.create(top5);
 
     console.log('Le bot est prêt !');
 });
@@ -41,35 +45,35 @@ fs.readdir('./commandes', (err, files) => {
 
     jsfile.forEach((f, ) => {
         let props = require(`./commandes/${f}`);
-        Client.commands.set(props.help.name, props);
+        client.commands.set(props.help.name, props);
     });
 });
 
 mongoose.connect(process.env.DATABASE, {useUnifiedTopology: true, useNewUrlParser: true}).then(() => console.log('La base de données est connectée.'));
 
-Client.on('interactionCreate', async interaction => {
+client.on('interactionCreate', async interaction => {
     if(interaction.isCommand()){
 
         let messageArray = interaction.commandName;
         let args = interaction.options;
-        let commandeFile = Client.commands.get(messageArray);
-        if(commandeFile) commandeFile.run(Client, interaction);
+        let commandeFile = client.commands.get(messageArray);
+        if(commandeFile) commandeFile.run(client, interaction);
     };
 });
 
-Client.login(process.env.TOKEN);
+client.login(process.env.TOKEN);
 
-Client.on('guildMemberAdd', member => {
+client.on('guildMemberAdd', member => {
     console.log('Un membre est arrivé.');
-    Client.channels.cache.find(channel => channel.name === '💬général').send(`Bienvenue ${member} sur le meilleur serveur que la Terre ait connu !`);
+    client.channels.cache.find(channel => channel.name === '💬général').send(`Bienvenue ${member} sur le meilleur serveur que la Terre ait connu !`);
 });
 
-Client.on('guildMemberRemove', member => {
+client.on('guildMemberRemove', member => {
     console.log('Un membre a quitté le serveur.');
-    Client.channels.cache.find(channel => channel.name === '💬général').send(`Sniff... ${member.user.username} a quitté le serveur ! On était si bien pourtant !`)
+    client.channels.cache.find(channel => channel.name === '💬général').send(`Sniff... ${member.user.username} a quitté le serveur ! On était si bien pourtant !`)
 });
 
-Client.on('messageCreate', message => {
+client.on('messageCreate', message => {
     Eco.findOne({
         User_ID: message.author.id
     }, (err, economie) => {
@@ -105,10 +109,10 @@ Client.on('messageCreate', message => {
                 economie.level = main_level + 1;
                 economie.xp = reste;
 
-                Client.channels.cache.find(channel => channel.name === '📈levelup').send(`GG ${message.author} tu viens de passer niveau ${main_level + 1} ! Tu deviens de plus en plus BG !`);
+                client.channels.cache.find(channel => channel.name === '📈levelup').send(`GG ${message.author} tu viens de passer niveau ${main_level + 1} ! Tu deviens de plus en plus BG !`);
 
                 acquerreur = message.member;
-                grade.run(Client, message, economie, acquerreur);
+                grade.run(client, message, economie, acquerreur);
             };
             economie.save();
         };
@@ -116,7 +120,8 @@ Client.on('messageCreate', message => {
 });
 
 let liste_vocal = [];
-Client.on('voiceStateUpdate', (oldMember, newMember) => {
+client.on('voiceStateUpdate', (oldMember, newMember) => {
+    if (newMember.member.user.bot) return
     let newUserChannel = newMember.channel;
     let oldUserChannel = oldMember.channel;
     let rejoint = newMember.member.user;
@@ -131,11 +136,14 @@ Client.on('voiceStateUpdate', (oldMember, newMember) => {
         for (var i in liste_vocal) {
             if (Object.values(liste_vocal[i])[0] === rejoint.username) {
                 var sortant = liste_vocal[i];
+                console.log(sortant);
             };
         };
         let date = Date.now();
         let temps = parseInt((date - Object.values(sortant)[1])/60000);
-        delete liste_vocal[i];
+        console.log(liste_vocal[i]);
+        index = liste_vocal.indexOf(sortant);
+        liste_vocal.splice(index, 1);
         Eco.findOne({
             User_ID: rejoint.id
         }, (err, economie) => {
@@ -156,7 +164,7 @@ Client.on('voiceStateUpdate', (oldMember, newMember) => {
                 if(!rejoint.username === economie.pseudo) {
                     economie.pseudo = rejoint.username;
                 };
-
+    
                 let main_level = economie.level;
                 let next_level = (economie.level + 1) * 10;
                 rejoint.send(`Vous avez passé ${temps} minutes en vocal, vous avez gagné ${bg} points BG.`);
@@ -164,9 +172,9 @@ Client.on('voiceStateUpdate', (oldMember, newMember) => {
                     let reste = economie.xp - next_level;
                     economie.level = main_level + 1;
                     economie.xp = reste;
-                    Client.channels.cache.find(channel => channel.name === '📈levelup').send(`GG ${message.author} tu viens de passer niveau ${main_level + 1} ! Tu deviens de plus en plus BG !`);
+                    client.channels.cache.find(channel => channel.name === '📈levelup').send(`GG ${sortant} tu viens de passer niveau ${main_level + 1} ! Tu deviens de plus en plus BG !`);    
                     acquerreur = newMember.member;
-                    grade.run(Client, Discord.Message, economie, acquerreur);
+                    grade.run(client, Discord.Message, economie, acquerreur);
                 };
                 economie.save();
             };
