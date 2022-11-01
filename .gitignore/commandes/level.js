@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Eco = require('../modules/economie');
 
-module.exports.run = async (Client, interaction) => {
+module.exports.run = async (client, interaction) => {
     Eco.findOne({
         User_ID: interaction.member.id
     }, (err, economie) => {
