@@ -1,4 +1,4 @@
-module.exports.run = async (Client, interaction) => {
+module.exports.run = async (client, interaction) => {
     interaction.reply(`Et bah coucou à toi aussi, ${interaction.user.username} !`);
 };
 
